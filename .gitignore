@@ -1,5 +1,6 @@
 # data files
 input*.txt
+dummy*.txt
 
 # History files
 .Rhistory
