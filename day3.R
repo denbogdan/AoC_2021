@@ -1,3 +1,5 @@
+start_time <- Sys.time()
+
 library(stringr)
 rep <- read.delim("/Users/dbogdan/Documents/AoC_2021/input_day3.txt", header=F, colClasses = c("factor"))
 
@@ -8,8 +10,7 @@ rep <- sapply(rep$V1, function(x) str_extract_all(x, boundary("character"))) |>
 
 #gamma
 gamma <- c()
-for(i in 1:ncol(rep))
-{
+for(i in 1:ncol(rep)) {
   if(sum(rep[,i]) > (n-sum(rep[,i])))
     bit <- 1
   else
@@ -30,8 +31,7 @@ gamma_dec*epsilon_dec
 ##Question 2 -----------------------------------------------------------------------
 oxygen <- rep
 i <- 1
-while(nrow(oxygen) > 1)
-{
+while(nrow(oxygen) > 1) {
   #update n
   n <- nrow(oxygen)
   
@@ -50,8 +50,7 @@ while(nrow(oxygen) > 1)
 
 CO2 <- rep
 i <- 1
-while(nrow(CO2) > 1)
-{
+while(nrow(CO2) > 1) {
   #update n
   n <- nrow(CO2)
   
@@ -74,4 +73,5 @@ oxygen_dec <- strtoi(paste0(as.character(oxygen), collapse=""), base = 2)
 CO2_dec <- strtoi(paste0(as.character(CO2), collapse=""), base = 2)
 oxygen_dec*CO2_dec
 
-
+end_time <- Sys.time()
+end_time - start_time
