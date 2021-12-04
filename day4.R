@@ -1,8 +1,8 @@
 library(stringr)
 
-numbers < read.delim("/Users/dbogdan/Documents/AoC_2021/day4_input_numbers.txt", sep=",", header=F)
+numbers < read.delim("/Users/dbogdan/Documents/AoC_2021/input_day4_numbers.txt", sep=",", header=F)
 numbers <- as.numeric(numbers[1,])
-boards <- readLines("/Users/dbogdan/Documents/AoC_2021/day4_input_boards.txt")
+boards <- readLines("/Users/dbogdan/Documents/AoC_2021/input_day4_boards.txt")
 
 ##Question 1 -----------------------------------------------------------------------
 #wrangle input into list of matrices
@@ -57,7 +57,7 @@ boards_list_numeric <- lapply(boards_list, function(x) { sapply(x, function(x) s
     unlist() |> as.numeric() |> matrix(ncol=5) |> t() })
 
 #find the loser board
-while(length(boards_list_numeric) >1) {
+while(length(boards_list_numeric) >0) {
   stop=FALSE
   for(no in numbers) {
     for(i in 1:length(boards_list_numeric)) {
@@ -91,5 +91,5 @@ brd[is.na(brd)] <- 0
 numbers_left <- brd[which(brd != 0)]
 number_called_to_win <- sapply(numbers_left, function(x) {which(numbers==x)})
 number_called_to_win <- numbers_left[which(number_called_to_win==min(number_called_to_win))]
-number_called_to_win * sum(brd)
+number_called_to_win * (sum(brd)-number_called_to_win)
 
