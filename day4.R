@@ -57,7 +57,7 @@ boards_list_numeric <- lapply(boards_list, function(x) { sapply(x, function(x) s
     unlist() |> as.numeric() |> matrix(ncol=5) |> t() })
 
 #find the loser board
-while(length(boards_list_numeric) >0) {
+while(length(boards_list_numeric) > 1) {
   stop=FALSE
   for(no in numbers) {
     for(i in 1:length(boards_list_numeric)) {
@@ -79,10 +79,7 @@ while(length(boards_list_numeric) >0) {
       break;
   }
   
-  print(length(boards_list_numeric))
-  print(boards_list_numeric[[i]])
   boards_list_numeric <- boards_list_numeric[-i]
-  print(length(boards_list_numeric))
 }
 
 ##Answer 2 -------------------------------------------------------------------------
