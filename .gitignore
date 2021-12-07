@@ -1,6 +1,7 @@
 # data files
 input*.txt
 dummy*.txt
+recursion.R
 
 # History files
 .Rhistory
