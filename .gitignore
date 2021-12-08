@@ -2,6 +2,7 @@
 input*.txt
 dummy*.txt
 recursion.R
+scraps*
 
 # History files
 .Rhistory
