@@ -1,3 +1,5 @@
+library(dplyr)
+
 d <- read.delim("/Users/dbogdan/portfolio/AoC_2021/input_day8.txt", header=FALSE, sep=" ")
 d1 <- as.matrix(d[,c(12:15)])
 d2 <- as.matrix(d[,c(1:10)])
@@ -101,11 +103,17 @@ apply(numbers_decoded, MARGIN=1, function(x) {paste(as.character(x), collapse=""
 
 
 ##Nota Bene ------------------------------------------------------------------------
+
 #positions on the seven segment display
-#    1
-#    _
-# 6 | | 2
-#    _
-# 5 | | 3
-#    _
-#    4
+#     1
+#   -----
+#  |     |  
+# 6|     | 2
+#  |  7  | 
+#   -----
+#  |     | 
+# 5|     | 3
+#  |     |  
+#   -----
+#     4
+# 

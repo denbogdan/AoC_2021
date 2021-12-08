@@ -27,3 +27,6 @@ scraps*
 
 # R Environment Variables
 .Renviron
+
+# MacOS files
+.DS_Store
