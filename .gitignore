@@ -3,6 +3,7 @@ input*.txt
 dummy*.txt
 recursion.R
 scraps*
+*.pptx
 
 # History files
 .Rhistory
