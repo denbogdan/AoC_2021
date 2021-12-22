@@ -1,4 +1,4 @@
-mat <- read.delim("/Users/dbogdan/portfolio/AoC_2021/input_day9.txt", sep="", header=FALSE, colClasses = c("character"))
+mat <- read.delim("/Users/dbogdan/projects/AoC_2021/input_day9.txt", sep="", header=FALSE, colClasses = c("character"))
 mat2 <- strsplit(mat$V1[1], split = "") |> unlist()
 for(i in 2:length(mat$V1)) {
   mat2 <- rbind(mat2, strsplit(mat$V1[i], split = "") |> unlist())
@@ -89,9 +89,6 @@ sum(min_values+1)
 
 ##Question 2 -----------------------------------------------------------------------
 
-#to account for the borders
-coordinates <- coordinates+1
-
 #prepare matrix
 matbordered <- rbind(c(rep(9, 100)), mat, c(rep(9,100)))
 matbordered <- cbind(c(rep(9, 102)), matbordered, c(rep(9,102)))
@@ -101,58 +98,34 @@ mat <- matbordered
 mat[which(mat==9)] <- NA
 matinit=mat
 
+#to account for the borders
+coordinates <- coordinates+1
 
+#rescursion
 adjacent <- function(x,y,basin,mat) {
   directions <- list(c(1,1), c(1,0), c(1,-1), c(0,-1), c(-1,-1), c(-1,0), c(-1,1), c(0,1))
   for(i in 1:length(directions)) {
+    #find direction
     xi <- directions[[i]][1]
     yi <- directions[[i]][2]
-    if((abs(xi)-abs(yi))==0) {
-      can9 <- c(mat[x+xi,y], mat[x,y+yi])
-      if(is.na(can9[1]) && is.na(can9[2])) {
-        #if hit border, add value to basin and move on to next direction
-        mat[x,y] <<- NA
-      } else {
-        #find the next point in this direction
-        point <- mat[x,y]
-        n <- mat[x+sign(xi),y+sign(yi)]
-        #if point has not been visited add to basin
-        if(!is.na(n)) {
-          if(!is.na(point) && n>point) {
-            mat[x,y] <<- NA
-            basin <<- c(basin, point)
-            adjacent(x+sign(xi), y+sign(yi), basin, mat)
-          } else {
-            if(!is.na(point) && n==point) {
-              mat[x,y] <<- NA   
-              mat[x+sign(xi), y+sign(yi)] <<- NA
-            }
-            if(!is.na(point) && n!=9) {
-              mat[x,y] <<- NA   
-              mat[x+sign(xi), y+sign(yi)] <<- NA
-            }
-          } 
-        } else {
-          mat[x,y] <<- NA
-        }
-      }
+    #consider diagonals separate from other directions
+    #scan to see if we have hit a border 
+    can9 <- c(mat[x+xi,y], mat[x,y+yi])
+    if(is.na(can9[1]) && is.na(can9[2])) {
+      #if hit border, add value to basin and move on to next direction
+      mat[x,y] <<- NA
     } else {
+      #find the next point in this direction
       point <- mat[x,y]
-      print(i)
-      print(c(x+sign(xi),y+sign(yi)))
       n <- mat[x+sign(xi),y+sign(yi)]
-      print(c(n, point))
+      #if point has not been visited add to basin
       if(!is.na(n)) {
         if(!is.na(point) && n>point) {
           mat[x,y] <<- NA
           basin <<- c(basin, point)
           adjacent(x+sign(xi), y+sign(yi), basin, mat)
         } else {
-          if(!is.na(point) && n==point) {
-            mat[x,y] <<- NA   
-            mat[x+sign(xi), y+sign(yi)] <<- NA
-          }
-          if(!is.na(point) && n!=9) {
+          if(!is.na(point) && (n==point || n!=9)) {
             mat[x,y] <<- NA   
             mat[x+sign(xi), y+sign(yi)] <<- NA
           }
@@ -164,6 +137,7 @@ adjacent <- function(x,y,basin,mat) {
   }
 }
 
+#for each minimum point, find basin
 bsns <- c()
 for(z in 1:nrow(coordinates)) {
   x <- coordinates[z,1]
@@ -178,19 +152,5 @@ for(z in 1:nrow(coordinates)) {
 
 ##Answer 2 -----------------------------------------------------------------------
 prod(sort(bsns, decreasing = TRUE)[1:3])
-
-
-
-##More nonsense  -----------------------------------------------------------------
-bsns <- c()
-for(z in 1:nrow(coordinates)) {
-  x <- coordinates[z,1]
-  y <- coordinates[z,2]
-  basin=c()
-  adjacent(x,y,basin,mat)
-  xbasins = table(as.numeric(matinit) == as.numeric(matinit)) - table(as.numeric(mat) == as.numeric(matinit))
-  bsns <- c(bsns, xbasins)
-  matinit <- mat
-}
 
 
