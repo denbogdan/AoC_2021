@@ -13,8 +13,9 @@ for(node in unique(c(gr$V1, gr$V2)))
 #count paths found
 path_no <- 0
 #mark visits
-visit_registry <- vector(mode = "list", length = length(nb))
-names(visit_registry) <- names(nb)
+# visit_registry <- vector(mode = "list", length = length(nb))
+# names(visit_registry) <- names(nb)
+visit_registry <-c("start")
 
 #recursion
 count_paths <- function(node, visit_registry) {
@@ -28,9 +29,10 @@ count_paths <- function(node, visit_registry) {
         count_paths(neighbours[i], visit_registry)
       else {
         #if lowercase, check if it has been visited
-        if(is.null(visit_registry[[neighbours[i]]])) {
+        if(! neighbours[i] %in% visit_registry) {
           #if not visited, mark visit then visit neighbours
-          visit_registry[[neighbours[i]]] <- "visited"
+          visit_registry <- c(visit_registry, neighbours[i])
+          print(visit_registry)
           count_paths(neighbours[i], visit_registry)
         } 
       }
@@ -41,6 +43,31 @@ count_paths <- function(node, visit_registry) {
 }
 
 
-count_paths("start", visit_registry)
+count_paths("start", "start")
 
+node <- "start"
+visit_registry <- "start"
+path_no <- 0
+
+while(node != "end") {
+  
+  neighbours <- nb[[node]]
+  
+  for(i in 1:length(neighbours)) {
+    print(i)
+    visit_registry <- c(visit_registry, neighbours[i])
+    print(paste("child is", neighbours[i]))
+    
+    if(toupper(neighbours[i])==neighbours[i]) {
+      node <- neighbours[i]
+    }
+    else {
+      if(! neighbours[i] %in% visit_registry) {
+        print(paste("node is", node))
+        node <- neighbours[i]
+      }
+    }
+  }
+  path_no <- path_no + 1
+}
 
