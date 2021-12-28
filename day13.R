@@ -1,5 +1,5 @@
 library(pheatmap)
-input <- readLines("/Users/dbogdan/projects/AoC_2021/input_day13.txt")
+input <- readLines("/Users/dbogdan/projects/AoC_2021/input/input_day13.txt")
 
 #separate coordinates from folding instructions
 coordinates <- input[1:840]

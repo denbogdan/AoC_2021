@@ -1,4 +1,4 @@
-o <- read.delim("/Users/dbogdan/projects/AoC_2021/input_day11.txt", sep="", header=FALSE, colClasses = c("character"))
+o <- read.delim("/Users/dbogdan/projects/AoC_2021/input/input_day11.txt", sep="", header=FALSE, colClasses = c("character"))
 o2 <- strsplit(o$V1[1], split = "") |> unlist()
 for(i in 2:length(o$V1)) 
   o2 <- rbind(o2, strsplit(o$V1[i], split = "") |> unlist())

@@ -1,4 +1,4 @@
-mat <- read.delim("/Users/dbogdan/projects/AoC_2021/input_day9.txt", sep="", header=FALSE, colClasses = c("character"))
+mat <- read.delim("/Users/dbogdan/projects/AoC_2021/input/input_day9.txt", sep="", header=FALSE, colClasses = c("character"))
 mat2 <- strsplit(mat$V1[1], split = "") |> unlist()
 for(i in 2:length(mat$V1)) {
   mat2 <- rbind(mat2, strsplit(mat$V1[i], split = "") |> unlist())
